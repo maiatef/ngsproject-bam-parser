@@ -129,6 +129,6 @@ samtools view SRR8893291_1.supp.bam | cut -f 3,4 | sort |
 samtools view SRR8893291_2.supp.bam | cut -f 3,4 | sort |
 
 #Justification for the supplementary reads: 
-
+it may indicate the presence of chimeric genes in RNA-seq. Chimeric genes (literally, made of parts from different sources) form through the combination of portions of two or more coding sequences to produce new genes
 
 
