@@ -13,3 +13,67 @@ wget -c ftp://ftp-trace.ncbi.nih.gov/sra/sra-instant/reads/ByRun/sra/SRR/SRR889/
 
 #3-Convert the sra file to fastq
 fastq-dump -I --split-files SRR8893291.sra
+
+#4- The quality of reads obtained are checked by fastqc
+mkdir fastqc && cd fastqc
+fastqc -t 1 -f fastq -noextract SRR8893291_1.fastq 
+fastqc -t 1 -f fastq -noextract SRR8893291_2.fastq 
+
+#Measure	Value:
+
+#Filename	SRR8893291_1.fastq
+#File type	Conventional base calls
+#Encoding	Sanger / Illumina 1.9
+#Total Sequences	16556
+#Sequences flagged as poor quality	0
+#Sequence length	301
+#%GC	41
+
+#Filename	SRR8893291_2.fastq
+#File type	Conventional base calls
+#Encoding	Sanger / Illumina 1.9
+#Total Sequences	16556
+#Sequences flagged as poor quality	0
+#Sequence length	301
+#%GC	41
+
+
+#The quality of SRR8893291_1.fastq is better that SRR8893291_2.fastq Per base sequence quality and Per sequence quality scores (phred scores)
+
+#5- download the whole genome of Influenze virus A in fasta format from: https://www.ncbi.nlm.nih.gov/genome/?term=Influenza+A+virus
+
+#6- unzip the whole genome
+gunzip GCF_000865085.1_ViralMultiSegProj15622_genomic.fna.gz 
+
+#7-index the genome
+mkdir -p bwa_align/bwa_index && cd bwa_align/bwa_index
+ln -s ~/NGS1_project/GCF_000865085.1_ViralMultiSegProj15622_genomic.fna
+bwa index -a bwtsw GCF_000865085.1_ViralMultiSegProj15622_genomic.fna 
+#[bwa_idx_build] fail to open file 'GCF_000865085.1_ViralMultiSegProj15622_genomic.fna' : No such file or directory
+#so I decided to try another code
+
+bwa index -a bwtsw ~/NGS1_project/GCF_000865085.1_ViralMultiSegProj15622_genomic.fna  
+#still sthg went wrong
+#[bwa_idx_build] fail to open file '/home/ngs-01/NGS1_project/GCF_000865085.1_ViralMultiSegProj15622_genomic.fna' : No such file or directory
+
+#go to the original folder that contain the genome file you want to index and repeat the code
+cd ../..
+bwa index -a bwtsw GCF_000865085.1_ViralMultiSegProj15622_genomic.fna 
+
+#8-Trimming
+f1="$HOME/workdir/NGS1_project/SRR8893291_1.pe.fastq"
+f2="$HOME/workdir/NGS1_project/SRR8893291_2.pe.fastq"
+newf1="$HOME/workdir/NGS1_project/SRR8893291_1.pe.trim.fastq"
+newf2="$HOME/workdir/NGS1_project/SRR8893291_2.pe.trim.fastq"
+newf1U="$HOME/workdir/NGS1_project/SRR8893291_1.se.trim.fastq"
+newf2U="$HOME/workdir/NGS1_project/SRR8893291_2.se.trim.fastq"
+adap="/home/ngs-01/miniconda3/envs/ngs1/share/trimmomatic-0.38-1/adapters"
+
+trimmomatic PE -threads 1 -phred33 -trimlog trimLogFile -summary statsSummaryFile  $f1 $f2 $newf1 $newf1U $newf2 $newf2U \
+ILLUMINACLIP:$adap/TruSeq3-PE.fa:2:30:10:1 SLIDINGWINDOW:4:15 MINLEN:36
+
+
+#8- alignment
+
+
+
