@@ -128,9 +128,7 @@ samtools view SRR8893291_2.supp.bam| cut -f 3,4,1 | sort | uniq -c |
 samtools view SRR8893291_1.supp.bam | cut -f 3,4 | sort |
 samtools view SRR8893291_2.supp.bam | cut -f 3,4 | sort |
 
-
-
-
+#Justification for the supplementary reads: 
 
 
 
