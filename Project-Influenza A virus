@@ -1,0 +1,14 @@
+#searched for an organism with small genome sequence < 5MB due to limited computational resources that I have witnessed during the assignment execution.
+# Therefore, I chose Influenze A virus 
+# I got the files from the SRA data base: Run= SRR8893291	
+
+#1- create the folder for your project: 
+source activate ngs1
+cd workdir 
+mkdir NGS1_project && cd NGS1_project
+
+#2- Data Download:
+wget https://www.ncbi.nlm.nih.gov/sra/SRX5679451[accn]
+then
+wget -c ftp://ftp-trace.ncbi.nih.gov/sra/sra-instant/reads/ByRun/sra/SRR/SRR889/SRR8893291/SRR8893291.sra
+
