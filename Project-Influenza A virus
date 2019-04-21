@@ -112,13 +112,22 @@ samtools index SRR8893291_2.sorted.bam
 samtools view -b -f 2048 SRR8893291_1.sorted.bam > SRR8893291_1.supp.bam
 samtools view -b -f 2048 SRR8893291_2.sorted.bam > SRR8893291_2.supp.bam
 
-samtools flagstat SRR8893291_1.sorted.supp.bam
-samtools flagstat SRR8893291_2.sorted.supp.bam
+samtools flagstat SRR8893291_1.supp.bam
+samtools flagstat SRR8893291_2.supp.bam
 
-samtools view $sample.supp.bam
-samtools view $sample.supp.bam | cut -f 3,4| head
-samtools view $sample.supp.bam | cut -f 3,4,1 | sort | uniq -c |
-samtools view $sample.supp.bam | cut -f 3,4 | sort |
+samtools view SRR8893291_1.supp.bam
+samtools view SRR8893291_2.supp.bam
+
+samtools view SRR8893291_1.supp.bam | cut -f 3,4| head
+samtools view SRR8893291_2.supp.bam | cut -f 3,4| head
+
+samtools view SRR8893291_1.supp.bam| cut -f 3,4,1 | sort | uniq -c |
+samtools view SRR8893291_2.supp.bam| cut -f 3,4,1 | sort | uniq -c |
+
+
+samtools view SRR8893291_1.supp.bam | cut -f 3,4 | sort |
+samtools view SRR8893291_2.supp.bam | cut -f 3,4 | sort |
+
 
 
 
